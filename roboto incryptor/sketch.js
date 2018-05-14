@@ -6,7 +6,7 @@
 // global variables
 let aSound,bSound,cSound,dSound,eSound,fSound,gSound,hSound,iSound,jSound,kSound,lSound,mSound,nSound;
 let oSound,pSound,qSound,rSound,sSound,tSound,uSound,vSound,wSound,xSound,ySound,zSound,spaceSound;
-
+let input,button;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"),bSound = loadSound("sounds/B.wav"),cSound = loadSound("sounds/C.wav"),dSound = loadSound("sounds/D.wav"),eSound = loadSound("sounds/E.wav");
@@ -20,9 +20,24 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  fSound.play();
+
+  input = createInput();
+  input.position(700, 500);
+
+  button = createButton("submit");
+  button.position(input.x + input.width, 500);
+  button.mousePressed();
 
 }
 
 function draw() {
   background(255);
+  // inputBox();
+  // recordInput();
+
 }
+//
+// function inputbox(){
+//
+// }
