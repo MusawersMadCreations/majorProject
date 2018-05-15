@@ -6,7 +6,10 @@
 // global variables
 let aSound,bSound,cSound,dSound,eSound,fSound,gSound,hSound,iSound,jSound,kSound,lSound,mSound,nSound;
 let oSound,pSound,qSound,rSound,sSound,tSound,uSound,vSound,wSound,xSound,ySound,zSound,spaceSound;
-let input,button;
+let textbox;
+let submitButton, playSoundButton;
+
+let lettersList = [];
 
 function preload() {
   aSound = loadSound("sounds/A.wav"),bSound = loadSound("sounds/B.wav"),cSound = loadSound("sounds/C.wav"),dSound = loadSound("sounds/D.wav"),eSound = loadSound("sounds/E.wav");
@@ -21,23 +24,39 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   fSound.play();
+  // creates text input box
+  textbox = createInput();
+  textbox.position(700, 500);
+  textbox.changed(recordInput);   // records text
 
-  input = createInput();
-  input.position(700, 500);
-
-  button = createButton("submit");
-  button.position(input.x + input.width, 500);
-  button.mousePressed();
+  submitButton = createButton("submit");
+  submitButton.position(textbox.x + textbox.width, 500);
 
 }
+
+
 
 function draw() {
   background(255);
-  // inputBox();
-  // recordInput();
-
+  makePlayButton();
 }
-//
-// function inputbox(){
-//
-// }
+
+function recordInput(){
+  lettersList.push(textbox.value());
+  console.log(textbox.value());
+}
+
+function makePlayButton(){
+  if (lettersList.length === 1 ){
+    submitButton = createButton("Play Sound");
+    submitButton.position(textbox.x + textbox.width + 100, 500);
+  }
+}
+
+function changeTextToSound(){
+  for (let i = 0; i < lettersList.length; i++) {
+      if (lettersList[i] === a){
+        
+      }
+  }
+}
