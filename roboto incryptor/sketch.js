@@ -28,7 +28,7 @@ function setup() {
   // creates text input box
   textbox = createInput();
   textbox.position(700, 500);
-  textbox.changed(recordInput);   // records text
+  textbox.input(recordInput);   // records text
 
   submitButton = createButton("submit");
   submitButton.position(textbox.x + textbox.width, 500);
@@ -52,7 +52,7 @@ function makePlayButton(){
 }
 
 function changeTextToSound(){
-  for (let i = lettersList[0]; i < lettersList[0].length; i++) {
+  for (let i = 0; i < lettersList[0].length; i++) {
     if (lettersList[i] === "a"){
       soundsList.push("OMG");
     }
