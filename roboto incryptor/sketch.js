@@ -10,6 +10,7 @@ let textbox;
 let submitButton, playSoundButton;
 
 let lettersList = [];
+let soundsList = [];
 
 function preload() {
   aSound = loadSound("sounds/A.wav"),bSound = loadSound("sounds/B.wav"),cSound = loadSound("sounds/C.wav"),dSound = loadSound("sounds/D.wav"),eSound = loadSound("sounds/E.wav");
@@ -54,9 +55,9 @@ function makePlayButton(){
 }
 
 function changeTextToSound(){
-  for (let i = 0; i < lettersList.length; i++) {
-      if (lettersList[i] === a){
-        
-      }
+  for (let i = lettersList[0]; i < lettersList[0].length; i++) {
+    if (lettersList[i] === "a"){
+      soundsList.push("OMG");
+    }
   }
 }
