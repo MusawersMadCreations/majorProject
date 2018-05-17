@@ -32,10 +32,7 @@ function setup() {
 
   submitButton = createButton("submit");
   submitButton.position(textbox.x + textbox.width, 500);
-
 }
-
-
 
 function draw() {
   background(255);
@@ -43,7 +40,7 @@ function draw() {
 }
 
 function recordInput(){
-  lettersList.push(textbox.value());
+  lettersList.push(textbox.value().split(""));
   console.log(textbox.value());
 }
 
