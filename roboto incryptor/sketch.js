@@ -18,7 +18,7 @@ function preload() {
   kSound = loadSound("sounds/K.wav"),lSound = loadSound("sounds/L.wav"),mSound = loadSound("sounds/M.wav"),nSound = loadSound("sounds/N.wav"),oSound = loadSound("sounds/O.wav");
   pSound = loadSound("sounds/P.wav"),qSound = loadSound("sounds/Q.wav"),rSound = loadSound("sounds/R.wav"),sSound = loadSound("sounds/S.wav"),tSound = loadSound("sounds/T.wav");
   uSound = loadSound("sounds/U.wav"),vSound = loadSound("sounds/V.wav"),wSound = loadSound("sounds/W.wav"),xSound = loadSound("sounds/X.wav"),ySound = loadSound("sounds/Y.wav");
-  zSound = loadSound("sounds/Z.wav");
+  zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav");
 }
 
 function setup() {
@@ -32,6 +32,8 @@ function setup() {
   submitButton = createButton("Submit");
   playSoundButton = createButton("Incrypt");
   submitButton.position(textbox.x + textbox.width, 500);
+  playSoundButton.position(textbox.x + textbox.width + 100, 500);
+
 
   changeTextToSound();
   textbox.changed(recordInput);   // records text
@@ -41,7 +43,9 @@ function setup() {
 
 function draw() {
   background(255);
-  makePlayButton();
+
+  playSoundButton.mousePressed(playsound);
+
 }
 
 function recordInput(){
@@ -50,15 +54,10 @@ function recordInput(){
   lettersList = textbox.value().split("");
   console.log(lettersList);
   changeTextToSound();
-  playSoundButton.mousePressed(playsound);
+
+
 }
 
-function makePlayButton(){
-  if (lettersList.length === 1 ){
-    submitButton = createButton("Play Sound");
-    submitButton.position(textbox.x + textbox.width + 100, 500);
-  }
-}
 
 function changeTextToSound(){
   for (let i = 0; i < lettersList.length; i++) {
@@ -140,9 +139,14 @@ function changeTextToSound(){
     if (lettersList[i] === "z"|| lettersList[i] === "Z"){
       soundsList.push(zSound);
     }
+    if (lettersList[i] === " "){
+      soundsList.push(spaceSound);
+    }
   }
 }
 
 function playsound(){
-  soundsList.play();
+  for (let i = 0; i < soundsList.length; i++) {
+    soundsList[i].play();
+  }
 }
