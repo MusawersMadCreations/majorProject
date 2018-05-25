@@ -44,8 +44,6 @@ function setup() {
 function draw() {
   background(255);
 
-  playSoundButton.mousePressed(playsound);
-
 }
 
 function recordInput(){
@@ -54,7 +52,7 @@ function recordInput(){
   lettersList = textbox.value().split("");
   console.log(lettersList);
   changeTextToSound();
-
+  playSoundButton.mousePressed(playsound);
 
 }
 
@@ -142,11 +140,15 @@ function changeTextToSound(){
     if (lettersList[i] === " "){
       soundsList.push(spaceSound);
     }
+    else{
+      soundsList.push(spaceSound);
+    }
   }
 }
 
 function playsound(){
   for (let i = 0; i < soundsList.length; i++) {
     soundsList[i].play();
+
   }
 }
