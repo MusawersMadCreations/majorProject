@@ -12,6 +12,8 @@ let submitButton, playSoundButton;
 let lettersList = [];
 let soundsList = [];
 
+let myTimer;
+
 function preload() {
   aSound = loadSound("sounds/A.wav"),bSound = loadSound("sounds/B.wav"),cSound = loadSound("sounds/C.wav"),dSound = loadSound("sounds/D.wav"),eSound = loadSound("sounds/E.wav");
   fSound = loadSound("sounds/F.wav"),gSound = loadSound("sounds/G.wav"),hSound = loadSound("sounds/H.wav"),iSound = loadSound("sounds/I.wav"),jSound = loadSound("sounds/J.wav");
@@ -23,6 +25,10 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+
+
+
   fSound.play();
   // creates text input box
   textbox = createInput();
@@ -37,6 +43,7 @@ function setup() {
 
   changeTextToSound();
   textbox.changed(recordInput);   // records text
+
 
 
 }
@@ -148,8 +155,36 @@ function changeTextToSound(){
 
 function playsound(){
   for (let i = 0; i < soundsList.length; i++) {
-    soundsList[i].pause();
-    soundsList[i].play();
+    myTimer = new Timer(200);
+    if (myTimer.isDone()) {
+      soundsList[i].play();
+      myTimer.reset();
+    }
 
+  }
+}
+
+class Timer {
+  constructor(waitTime) {
+    this.waitTime = waitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  reset(newWaitTime) {
+    this.waitTime = newWaitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  isDone() {
+    if (millis() >= this.finishTime) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
