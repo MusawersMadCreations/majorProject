@@ -49,7 +49,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  state = "start";
+  state = "program";
   fSound.play();
   // creates text input box
   textbox = createInput();
@@ -58,8 +58,6 @@ function setup() {
   playSoundButton = createButton("Encrypt");
 
   changeTextToSound();
-  textbox.changed(recordInput); // records text
-
 }
 
 function draw() {
@@ -69,13 +67,14 @@ function draw() {
   }
 }
 
+
 function checkEvents() {
   if (state === "program"){
+    textbox.position(700, 500);
     submitButton.position(textbox.x + textbox.width, 500);
     playSoundButton.position(textbox.x + textbox.width + 100, 500);
     playSoundButton.mousePressed(playsound);
-    submitButton.mousePressed(submitText);
-    textbox.position(700, 500);
+    submitButton.mousePressed(recordInput);
   }
 }
 
