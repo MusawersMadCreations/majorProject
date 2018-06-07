@@ -8,6 +8,7 @@ let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSou
 let textbox;
 let submitButton, playSoundButton;
 
+let animationList = [];
 let lettersList = [];
 let soundsList = [];
 
@@ -16,22 +17,6 @@ let myTimer;
 let wordtext = {
   x: 800,
   y: 400,
-};
-
-let roboto = {
-  rx: 0,
-  ry: 75,
-  ox: 75,
-  oy: 75,
-  bx: 150,
-  by: 75,
-  o2x: 225,
-  o2y: 75,
-  tx: 300,
-  ty: 75,
-  o3x: 375,
-  o3y: 75,
-  speed: 3,
 };
 
 
@@ -49,8 +34,11 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  state = "program";
+  state = "start";
+
   fSound.play();
+  animationList.push(new Letter(300, 400));
+
   // creates text input box
   textbox = createInput();
 
@@ -189,6 +177,23 @@ function playsound() {
     }
   }
 }
+
+class letter{
+  constructor(x,y,size,speed,color){
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.speed = speed;
+    this.color = color
+  }
+
+  display(){
+    textFont(this.size);
+    fill(0,0,0,this.color);
+    text("ROBOTO",this.x,this.y);
+  }
+}
+
 class Timer {
   constructor(waitTime) {
     this.waitTime = waitTime;
@@ -213,10 +218,12 @@ class Timer {
   }
 }
 
+
 function submitText() {
   if (state === "program"){
     textAlign(CENTER);
     textSize(100);
+
     if (lettersList.length < 1) {
       background(255, 0, 0);
       text("You Can't Submit Nothing", wordtext.x, wordtext.y);
@@ -230,21 +237,13 @@ function submitText() {
 
 function startAnimation() {
   if (state === "start") {
-    lettersPath();
+    startScreen();
   } else {
     state = "program";
   }
 }
 
-function lettersPath() {
+function startScreen() {
   textSize(75);
   robotoletter();
-  roboto.ry + 75,roboto.oy + 75,roboto.by + 75,roboto.o2y + 75, roboto.ty + 75,roboto.o3y + 75;
-  robotoletter();
-
-}
-
-function robotoletter(){
-  text("R", roboto.rx, roboto.ry), text("O", roboto.ox, roboto.oy), text("B", roboto.bx, roboto.by);
-  text("O", roboto.o2x, roboto.o2y), text("T", roboto.tx, roboto.ty), text("O", roboto.o3x, roboto.o3y);
 }
