@@ -37,7 +37,6 @@ function setup() {
   state = "start";
 
   fSound.play();
-  animationList.push(new Letter(300, 400));
 
   // creates text input box
   textbox = createInput();
@@ -178,19 +177,22 @@ function playsound() {
   }
 }
 
-class letter{
+class Letter{
   constructor(x,y,size,speed,color){
     this.x = x;
     this.y = y;
     this.size = size;
     this.speed = speed;
-    this.color = color
+    this.color = color;
   }
 
   display(){
-    textFont(this.size);
+    textSize(this.size);
     fill(0,0,0,this.color);
     text("ROBOTO",this.x,this.y);
+  }
+  move(){
+    this.x += random(-7, 7);
   }
 }
 
@@ -237,13 +239,16 @@ function submitText() {
 
 function startAnimation() {
   if (state === "start") {
-    startScreen();
+    background(255);
+    for (let i=0; i< 30; i++) {
+      animationList.push(new Letter(random(50,width - 50),random(50,height - 50),random(25,100),random(3,7),random(15,255)));
+      animationList[i].move();
+      animationList[i].display();
+
+
+
+    }
   } else {
     state = "program";
   }
-}
-
-function startScreen() {
-  textSize(75);
-  robotoletter();
 }
