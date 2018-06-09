@@ -34,7 +34,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  state = "start";
+  state = "program";
 
   fSound.play();
 
@@ -43,6 +43,25 @@ function setup() {
 
   submitButton = createButton("Submit");
   playSoundButton = createButton("Encrypt");
+
+  //styles
+  submitButton.style("background-color", "#4CAF50");
+  submitButton.style("color", "white");
+  submitButton.style("border", "none");
+  submitButton.style("font-size", "30px");
+  submitButton.style("padding", "16px 32px");
+  submitButton.style("width", "20%");
+
+
+  playSoundButton.style("background-color", "#4CAF50");
+  playSoundButton.style("color", "white");
+  playSoundButton.style("border", "none");
+  playSoundButton.style("font-size", "30px");
+  playSoundButton.style("padding", "16px 32px");
+  playSoundButton.style("width", "20%");
+
+  textbox.style("width","50%");
+  textbox.style("height","150px");
 
   changeTextToSound();
 }
@@ -57,9 +76,9 @@ function draw() {
 
 function checkEvents() {
   if (state === "program"){
-    textbox.position(700, 500);
-    submitButton.position(textbox.x + textbox.width, 500);
-    playSoundButton.position(textbox.x + textbox.width + 100, 500);
+    textbox.position(width/2, 200);
+    submitButton.position(width/4 , 500);
+    playSoundButton.position(width/4 * 2.5, 500);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
   }
