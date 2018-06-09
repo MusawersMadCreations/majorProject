@@ -41,8 +41,8 @@ function setup() {
   // creates text input box
   textbox = createInput();
 
-  submitButton = createButton("Submit");
-  playSoundButton = createButton("Encrypt");
+  submitButton = createButton("Encrypt");
+  playSoundButton = createButton("Play Sound");
 
   //styles
   submitButton.style("background-color", "#4CAF50");
@@ -60,8 +60,8 @@ function setup() {
   playSoundButton.style("padding", "16px 32px");
   playSoundButton.style("width", "20%");
 
-  textbox.style("width","50%");
-  textbox.style("height","150px");
+  textbox.style("width","57%");
+  textbox.style("height","250px");
 
   changeTextToSound();
 }
@@ -76,7 +76,7 @@ function draw() {
 
 function checkEvents() {
   if (state === "program"){
-    textbox.position(width/2, 200);
+    textbox.position(width/4, 200);
     submitButton.position(width/4 , 500);
     playSoundButton.position(width/4 * 2.5, 500);
     playSoundButton.mousePressed(playsound);
