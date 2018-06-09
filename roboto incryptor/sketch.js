@@ -16,7 +16,7 @@ let myTimer;
 
 let wordtext = {
   x: 800,
-  y: 400,
+  y: 200,
 };
 
 
@@ -39,7 +39,8 @@ function setup() {
   fSound.play();
 
   // creates text input box
-  textbox = createInput();
+  textbox = createInput("Enter What You Want EnCrypted");
+  // textbox = selectAll("#textbox");
 
   submitButton = createButton("Encrypt");
   playSoundButton = createButton("Play Sound");
@@ -60,8 +61,10 @@ function setup() {
   playSoundButton.style("padding", "16px 32px");
   playSoundButton.style("width", "20%");
 
-  textbox.style("width","57%");
-  textbox.style("height","250px");
+  textbox.style("width","56%");
+  textbox.style("height","15px");
+  textbox.style("padding","7px");
+
 
   changeTextToSound();
 }
@@ -76,7 +79,7 @@ function draw() {
 
 function checkEvents() {
   if (state === "program"){
-    textbox.position(width/4, 200);
+    textbox.position(width/4, 400);
     submitButton.position(width/4 , 500);
     playSoundButton.position(width/4 * 2.5, 500);
     playSoundButton.mousePressed(playsound);
@@ -91,6 +94,7 @@ function recordInput() {
     lettersList = textbox.value().split("");
     console.log(lettersList);
     changeTextToSound();
+    submitText();
   }
 }
 
@@ -263,8 +267,6 @@ function startAnimation() {
       animationList.push(new Letter(random(50,width - 50),random(50,height - 50),random(25,100),random(3,7),random(15,255)));
       animationList[i].move();
       animationList[i].display();
-
-
 
     }
   } else {
