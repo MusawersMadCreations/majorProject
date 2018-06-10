@@ -61,9 +61,9 @@ function setup() {
   playSoundButton.style("padding", "16px 32px");
   playSoundButton.style("width", "20%");
 
-  textbox.style("width","56%");
-  textbox.style("height","15px");
-  textbox.style("padding","7px");
+  textbox.style("width", "56%");
+  textbox.style("height", "15px");
+  textbox.style("padding", "7px");
 
 
   changeTextToSound();
@@ -71,24 +71,24 @@ function setup() {
 
 function draw() {
   startAnimation();
-  if (state === "program"){
+  if (state === "program") {
     checkEvents();
   }
 }
 
 
 function checkEvents() {
-  if (state === "program"){
-    textbox.position(width/4, 400);
-    submitButton.position(width/4 , 500);
-    playSoundButton.position(width/4 * 2.5, 500);
+  if (state === "program") {
+    textbox.position(width / 4, 400);
+    submitButton.position(width / 4, 500);
+    playSoundButton.position(width / 4 * 2.5, 500);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
   }
 }
 
 function recordInput() {
-  if (state === "program"){
+  if (state === "program") {
     lettersList = [];
     soundsList = [];
     lettersList = textbox.value().split("");
@@ -99,7 +99,7 @@ function recordInput() {
 }
 
 function changeTextToSound() {
-  if (state === "program"){
+  if (state === "program") {
     for (let i = 0; i < lettersList.length; i++) {
       if (lettersList[i] === "a" || lettersList[i] === "A") {
         soundsList.push(aSound);
@@ -187,7 +187,7 @@ function changeTextToSound() {
 }
 
 function playsound() {
-  if (state === "program"){
+  if (state === "program") {
     if (soundsList.length >= 1) {
       myTimer = new Timer(200);
       for (let i = 0; i < soundsList.length; i++) {
@@ -200,8 +200,8 @@ function playsound() {
   }
 }
 
-class Letter{
-  constructor(x,y,size,speed,color){
+class Letter {
+  constructor(x, y, size, speed, color) {
     this.x = x;
     this.y = y;
     this.size = size;
@@ -209,12 +209,12 @@ class Letter{
     this.color = color;
   }
 
-  display(){
+  display() {
     textSize(this.size);
-    fill(0,0,0,this.color);
-    text("ROBOTO",this.x,this.y);
+    fill(0, 0, 0, this.color);
+    text("ROBOTO", this.x, this.y);
   }
-  move(){
+  move() {
     this.x += random(-7, 7);
   }
 }
@@ -245,7 +245,7 @@ class Timer {
 
 
 function submitText() {
-  if (state === "program"){
+  if (state === "program") {
     textAlign(CENTER);
     textSize(100);
 
@@ -263,8 +263,8 @@ function submitText() {
 function startAnimation() {
   if (state === "start") {
     background(255);
-    for (let i=0; i< 30; i++) {
-      animationList.push(new Letter(random(50,width - 50),random(50,height - 50),random(25,100),random(3,7),random(15,255)));
+    for (let i = 0; i < 30; i++) {
+      animationList.push(new Letter(random(50, width - 50), random(50, height - 50), random(25, 100), random(3, 7), random(15, 255)));
       animationList[i].move();
       animationList[i].display();
 
