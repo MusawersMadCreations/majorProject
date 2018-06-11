@@ -19,7 +19,7 @@ let wordtext = {
   y: 200,
 };
 
-
+let soundIsPlaying;
 let state;
 
 function preload() {
@@ -44,6 +44,7 @@ function setup() {
 
   submitButton = createButton("Encrypt");
   playSoundButton = createButton("Play Sound");
+  soundIsPlaying = true;
 
   //styles
   submitButton.style("background-color", "#4CAF50");
@@ -189,16 +190,16 @@ function changeTextToSound() {
 function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
-      myTimer = new Timer(200);
-      for (let i = 0; i < soundsList.length; i++) {
-        if (myTimer.isDone()) {
+      while (soundIsPlaying) {
+        soundIsPlaying = false;
+        for (let i = 0; i < soundsList.length; i++) {
           soundsList[i].play();
-          myTimer.reset(200);
         }
       }
     }
   }
 }
+
 
 class Letter {
   constructor(x, y, size, speed, color) {
@@ -219,42 +220,25 @@ class Letter {
   }
 }
 
-class Timer {
-  constructor(waitTime) {
-    this.waitTime = waitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  reset(newWaitTime) {
-    this.waitTime = newWaitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  isDone() {
-    if (millis() >= this.finishTime) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-
 function submitText() {
   if (state === "program") {
     textAlign(CENTER);
     textSize(100);
 
     if (lettersList.length < 1) {
-      background(255, 0, 0);
-      text("You Can't Submit Nothing", wordtext.x, wordtext.y);
+      noStroke();
+      fill(204,0,0);
+      rect(wordtext.x ,wordtext.y,500,100);
+      fill(0);
+      text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
+      
     } else if (lettersList.length >= 1) {
       background(0, 255, 0);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
+    }
+    else if (soundsList.length < 1) {
+      background(255, 0, 0);
+      text("You Must Encrypt First", wordtext.x, wordtext.y);
     }
   }
 }
