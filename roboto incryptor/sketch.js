@@ -92,9 +92,9 @@ function checkEvents() {
 }
 
 function downloadSound(){
-  let FileSaver = require('file-saver');
-   blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-  FileSaver.saveAs(blob, "hello world.txt");
+  // let FileSaver = require('file-saver');
+  //  blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+  // FileSaver.saveAs(blob, "hello world.txt");
 }
 function recordInput() {
   if (state === "program") {
@@ -198,11 +198,9 @@ function changeTextToSound() {
 function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
-      while (soundIsPlaying) {
-        soundIsPlaying = false;
-        for (let i = 0; i < soundsList.length; i++) {
-          soundsList[i].play();
-        }
+      background(255);
+      for (let i = 0; i < soundsList.length; i++) {
+        soundsList[i].play();
       }
     }
   }
@@ -236,17 +234,17 @@ function submitText() {
     if (lettersList.length < 1) {
       noStroke();
       fill(204,0,0);
-      rect(wordtext.x ,wordtext.y,500,100);
+      rect(200,100,1220,125);
       fill(0);
       text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
 
     } else if (lettersList.length >= 1) {
-      background(0, 255, 0);
+      noStroke();
+      fill(76,175,80);
+      rect(200,100,1220,125);
+      fill(0);
+      textSize(85);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
-    }
-    else if (soundsList.length < 1) {
-      background(255, 0, 0);
-      text("You Must Encrypt First", wordtext.x, wordtext.y);
     }
   }
 }
