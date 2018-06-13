@@ -6,7 +6,7 @@
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
 let textbox;
-let submitButton, playSoundButton;
+let submitButton, playSoundButton, downloadButton;
 
 let animationList = [];
 let lettersList = [];
@@ -44,6 +44,7 @@ function setup() {
 
   submitButton = createButton("Encrypt");
   playSoundButton = createButton("Play Sound");
+  downloadButton = createButton("Download");
   soundIsPlaying = true;
 
   //styles
@@ -83,11 +84,18 @@ function checkEvents() {
     textbox.position(width / 4, 400);
     submitButton.position(width / 4, 500);
     playSoundButton.position(width / 4 * 2.5, 500);
+    downloadButton.position(100,100);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
+    downloadButton.mousePressed(downloadSound);
   }
 }
 
+function downloadSound(){
+  let FileSaver = require('file-saver');
+   blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+  FileSaver.saveAs(blob, "hello world.txt");
+}
 function recordInput() {
   if (state === "program") {
     lettersList = [];
@@ -231,7 +239,7 @@ function submitText() {
       rect(wordtext.x ,wordtext.y,500,100);
       fill(0);
       text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
-      
+
     } else if (lettersList.length >= 1) {
       background(0, 255, 0);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
