@@ -199,14 +199,50 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
+<<<<<<< HEAD
       for (let i = 0; i < soundsList.length; i++) {
           soundsList[i].play();
 
+=======
+      myTimer = new Timer(500);
+      let i = 0;
+      while (i < lettersList.length) {
+        lettersList[i].play();
+        if (myTimer.isDone()) {
+          i++;
+          myTimer.reset(500);
+        }
+>>>>>>> dc9e84dfc951d40559081d020bdb5251af220421
       }
     }
   }
 }
 
+
+class Timer {
+  constructor(waitTime) {
+    this.waitTime = waitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  reset(newWaitTime) {
+    this.waitTime = newWaitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  isDone() {
+    if (millis() >= this.finishTime) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
 
 class Letter {
   constructor(x, y, size, speed, color) {
