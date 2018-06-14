@@ -29,15 +29,14 @@ function preload() {
   pSound = loadSound("sounds/P.wav"), qSound = loadSound("sounds/Q.wav"), rSound = loadSound("sounds/R.wav"), sSound = loadSound("sounds/S.wav"), tSound = loadSound("sounds/T.wav");
   uSound = loadSound("sounds/U.wav"), vSound = loadSound("sounds/V.wav"), wSound = loadSound("sounds/W.wav"), xSound = loadSound("sounds/X.wav"), ySound = loadSound("sounds/Y.wav");
   zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav");
+  font = loadFont("font/robot.ttf");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
   state = "program";
 
   fSound.play();
-
   // creates text input box
   textbox = createInput("Enter What You Want EnCrypted");
   // textbox = selectAll("#textbox");
@@ -48,6 +47,7 @@ function setup() {
   soundIsPlaying = true;
 
   //styles
+  textStyle(font);
   submitButton.style("background-color", "#4CAF50");
   submitButton.style("color", "white");
   submitButton.style("border", "none");
@@ -92,9 +92,9 @@ function checkEvents() {
 }
 
 function downloadSound(){
-  // let FileSaver = require('file-saver');
-  //  blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-  // FileSaver.saveAs(blob, "hello world.txt");
+  let FileSaver = require('file-saver');
+   blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+  FileSaver.saveAs(blob, "hello world.txt");
 }
 function recordInput() {
   if (state === "program") {
@@ -200,7 +200,8 @@ function playsound() {
     if (soundsList.length >= 1) {
       background(255);
       for (let i = 0; i < soundsList.length; i++) {
-        soundsList[i].play();
+          soundsList[i].play();
+
       }
     }
   }
@@ -243,7 +244,7 @@ function submitText() {
       fill(76,175,80);
       rect(200,100,1220,125);
       fill(0);
-      textSize(85);
+      textSize(80);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
     }
   }
@@ -261,5 +262,30 @@ function startAnimation() {
     }
   } else {
     state = "program";
+  }
+}
+
+class Timer {
+  constructor(waitTime) {
+    this.waitTime = waitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  reset(newWaitTime) {
+    this.waitTime = newWaitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  isDone() {
+    if (millis() >= this.finishTime) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
