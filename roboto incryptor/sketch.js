@@ -17,12 +17,19 @@ let soundsList = [];
 let myTimer;
 
 let wordtext = {
-  x: 800,
+  x: 785,
   y: 200,
 };
 
-let soundIsPlaying;
+let box = {
+  x: 185,
+  y: 100,
+  l: 1220,
+  w: 125,
+};
+
 let state;
+let isDone = true;
 
 let i = -1;
 
@@ -38,17 +45,19 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   state = "program";
-  fSound.play();
+
   // creates text input box
   textbox = createInput("Enter What You Want EnCrypted");
-  // textbox = selectAll("#textbox");
 
+  //buttons
   submitButton = createButton("Encrypt");
   playSoundButton = createButton("Play Sound");
   downloadButton = createButton("Download");
-  soundIsPlaying = true;
+  uploadButton = createButton("Upload");
+  decryptButton = createButton("Decrypt");
+  startButton = createButton("Start");
 
-  //styles
+  //css styles
   submitButton.style("background-color", "#4CAF50");
   submitButton.style("color", "white");
   submitButton.style("border", "none");
@@ -64,6 +73,34 @@ function setup() {
   playSoundButton.style("padding", "16px 32px");
   playSoundButton.style("width", "20%");
 
+  downloadButton.style("background-color", "#1E90FF");
+  downloadButton.style("color", "white");
+  downloadButton.style("border", "none");
+  downloadButton.style("font-size", "30px");
+  downloadButton.style("padding", "6px 2px");
+  downloadButton.style("width", "10%");
+
+  uploadButton.style("background-color", "#1E90FF");
+  uploadButton.style("color", "white");
+  uploadButton.style("border", "none");
+  uploadButton.style("font-size", "30px");
+  uploadButton.style("padding", "6px 2px");
+  uploadButton.style("width", "10%");
+
+  decryptButton.style("background-color", "#1E90FF");
+  decryptButton.style("color", "white");
+  decryptButton.style("border", "none");
+  decryptButton.style("font-size", "30px");
+  decryptButton.style("padding", "16px 32px");
+  decryptButton.style("width", "20%");
+
+  startButton.style("background-color", "#4CAF50");
+  startButton.style("color", "white");
+  startButton.style("border", "none");
+  startButton.style("font-size", "30px");
+  startButton.style("padding", "16px 32px");
+  startButton.style("width", "20%");
+
   textbox.style("width", "56%");
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
@@ -74,37 +111,57 @@ function setup() {
 
 function draw() {
   startAnimation();
-  if (state === "program") {
-    checkEvents();
-  }
+  checkEvents();
 }
 
 
 function checkEvents() {
+  if (state === "start") {
+    startButton.position(width / 2.5, 600)
+    startButton.mousePressed(changeState);
+  }
   if (state === "program") {
-    textbox.position(width / 4, 400);
-    submitButton.position(width / 4, 500);
-    playSoundButton.position(width / 4 * 2.5, 500);
-    downloadButton.position(100,100);
+    startButton.remove();
+    textbox.position(width / 5, 400);
+    submitButton.position(width / 5, 500);
+    playSoundButton.position(width / 5 * 2.85, 500);
+    downloadButton.position(width / 5 * 2.85, 600);
+    uploadButton.position(width / 5 * 1.5, 600);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
     downloadButton.mousePressed(downloadSound);
+    uploadButton.mousePressed(uploadScreen);
+    background(255);
+  }
+  if (state === "upload") {
+    n = createCanvas(windowWidth, windowHeighth);
   }
 }
 
-function downloadSound(){
-  let content = lettersList;
-  let filename = "Roboto.txt";
-  let blob = new Blob([content], {
-    type: "text/plain;charset=utf-8"
-  });
-  downloadFile(blob, filename);
+function changeState(){
+  state = "program"
 }
+function gotFile() {
+  //
+}
+
+function downloadSound() {
+  if (state = "program") {
+    //download button function
+    let content = lettersList;
+    let filename = "Roboto.text";
+    let blob = new Blob([content], {
+      type: "text/plain;charset=utf-8"
+    });
+    downloadFile(blob, filename);
+  }
+}
+
 function recordInput() {
   if (state === "program") {
     lettersList = [];
     soundsList = [];
-    lettersList = textbox.value().split("");
+    lettersList = textbox.value().split(""); //splits every character into a list
     console.log(lettersList);
     changeTextToSound();
     submitText();
@@ -112,6 +169,7 @@ function recordInput() {
 }
 
 function changeTextToSound() {
+  //converts every letter into a robot beep
   if (state === "program") {
     for (let i = 0; i < lettersList.length; i++) {
       if (lettersList[i] === "a" || lettersList[i] === "A") {
@@ -204,18 +262,17 @@ function playsound() {
     if (soundsList.length >= 1) {
       background(255);
       noStroke();
-      fill(30,144,255);
-      rect(200,100,1220,125);
+      fill(30, 144, 255);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       text("You Can Now Download", wordtext.x, wordtext.y);
-      i++;
+      i++; // adds 1 to the list value
       if (i === soundsList.length) return;
       soundsList[i].play();
-      setTimeout(playsound,250);
+      setTimeout(playsound, 250); // call the same fuction again every .250 seconds
     }
   }
 }
-
 
 
 class Letter {
@@ -233,7 +290,7 @@ class Letter {
     text("ROBOTO", this.x, this.y);
   }
   move() {
-    this.x += random(-7, 7);
+    this.x += random(2, -2);
   }
 }
 
@@ -241,18 +298,18 @@ function submitText() {
   if (state === "program") {
     textAlign(CENTER);
     textSize(100);
-
+    background(255);
     if (lettersList.length < 1) {
       noStroke();
-      fill(204,0,0);
-      rect(200,100,1220,125);
+      fill(204, 0, 0);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
 
     } else if (lettersList.length >= 1) {
       noStroke();
-      fill(76,175,80);
-      rect(200,100,1220,125);
+      fill(76, 175, 80);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       textSize(80);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
@@ -262,12 +319,25 @@ function submitText() {
 
 
 function startAnimation() {
-  if (state === "start") {
+  if (state === "start" && isDone) {
     background(255);
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
       animationList.push(new Letter(random(50, width - 50), random(50, height - 50), random(25, 100), random(3, 7), random(15, 255)));
       animationList[i].move();
       animationList[i].display();
     }
   }
+}
+
+function uploadScreen() {
+  state = "upload";
+  downloadButton.remove();
+  uploadButton.remove();
+  textbox.remove();
+  playSoundButton.remove();
+  submitButton.remove();
+  decryptButton.position(width / 2 - 230, 700);
+  rect(300, 100, 1400, 500, );
+  textSize(130);
+  text("DROP", 800, 400);
 }
