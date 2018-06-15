@@ -3,6 +3,8 @@
 // May 9, 2018
 
 // global variables
+
+
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
 let textbox;
@@ -31,7 +33,6 @@ function preload() {
   pSound = loadSound("sounds/P.wav"), qSound = loadSound("sounds/Q.wav"), rSound = loadSound("sounds/R.wav"), sSound = loadSound("sounds/S.wav"), tSound = loadSound("sounds/T.wav");
   uSound = loadSound("sounds/U.wav"), vSound = loadSound("sounds/V.wav"), wSound = loadSound("sounds/W.wav"), xSound = loadSound("sounds/X.wav"), ySound = loadSound("sounds/Y.wav");
   zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav");
-  font = loadFont("font/robot.ttf");
 }
 
 function setup() {
@@ -48,7 +49,6 @@ function setup() {
   soundIsPlaying = true;
 
   //styles
-  textStyle(font);
   submitButton.style("background-color", "#4CAF50");
   submitButton.style("color", "white");
   submitButton.style("border", "none");
@@ -93,9 +93,12 @@ function checkEvents() {
 }
 
 function downloadSound(){
-  let FileSaver = require('file-saver');
-   blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-  FileSaver.saveAs(blob, "hello world.txt");
+  let content = lettersList;
+  let filename = "Roboto.txt";
+  let blob = new Blob([content], {
+    type: "text/plain;charset=utf-8"
+  });
+  downloadFile(blob, filename);
 }
 function recordInput() {
   if (state === "program") {
@@ -200,65 +203,20 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
+      noStroke();
+      fill(30,144,255);
+      rect(200,100,1220,125);
+      fill(0);
+      text("You Can Now Download", wordtext.x, wordtext.y);
       i++;
-      if (i == soundsList.length) return;
+      if (i === soundsList.length) return;
       soundsList[i].play();
-      setTimeout(playsound,200);
+      setTimeout(playsound,250);
     }
   }
 }
 
-// function playsound() {
-//   if (state === "program") {
-//     if (soundsList.length >= 1) {
-//       background(255);
-//       i++;
-//       if (i == soundsList.length) return;
-//       soundsList[i].addEventListener('ended', playsound);
-//       soundsList[i].play();
-//     }
-//   }
-// }
 
-// function lolxdrawr(){
-//   let n = 0;
-//   myTimer = new Timer(0);
-//   while (n < soundsList.length){
-//     soundsList[n].play();
-//     if (myTimer.isDone()){
-//       n++;
-//       mytTimer.reset(1000)
-//     }
-//     if (n >= soundsList.lenght){
-//       break;
-//     }
-//   }
-// }
-
-class Timer {
-  constructor(waitTime) {
-    this.waitTime = waitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  reset(newWaitTime) {
-    this.waitTime = newWaitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  isDone() {
-    if (millis() >= this.finishTime) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-}
 
 class Letter {
   constructor(x, y, size, speed, color) {
@@ -310,9 +268,6 @@ function startAnimation() {
       animationList.push(new Letter(random(50, width - 50), random(50, height - 50), random(25, 100), random(3, 7), random(15, 255)));
       animationList[i].move();
       animationList[i].display();
-
     }
-  } else {
-    state = "program";
   }
 }
