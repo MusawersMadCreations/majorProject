@@ -4,6 +4,7 @@
 
 // global variables
 // omg omg qwerty omg omg omg qwerty omg omg omg
+//Despacito Quiero respirar tu cuello despacito Deja que te diga cosas al oído Para que te acuerdes si no estás conmigoDespacito Quiero desnudarte a besos despacito Firmo en las paredes de tu laberinto Y hacer de tu cuerpo todo un manuscrito
 
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
@@ -31,6 +32,7 @@ let box = {
 let state;
 
 let i = -1;
+let trigger = true;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -250,6 +252,7 @@ function playsound() {
       text("You Can Now Download", wordtext.x, wordtext.y);
       i++; // adds 1 to the list value
       if (i === soundsList.length) return;
+  
       soundsList[i].play();
       setTimeout(playsound,250); // call the same fuction again every .250 seconds
     }
