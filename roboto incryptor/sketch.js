@@ -199,20 +199,22 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
-      let n = 0;
-    while (n < soundsList.length){
-      soundsList[n].play();
-      }
+      myTimer = new Timer(200);
+      lolxdrawr();
     }
   }
 }
 
 function lolxdrawr(){
+  let n = 0;
+  while (n < soundsList.length){
+    soundsList[n].play();
+    if (myTimer.isDone()) {
+      i++;
+      myTimer.reset(200);
 
-  // let n = 0;
-  // while (n < soundsList.length){
-  //   soundsList[n].play();
-  // }
+    }
+  }
 }
 
 class Timer {
