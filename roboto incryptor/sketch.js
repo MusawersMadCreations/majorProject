@@ -22,6 +22,8 @@ let wordtext = {
 let soundIsPlaying;
 let state;
 
+let i = -1;
+
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
   fSound = loadSound("sounds/F.wav"), gSound = loadSound("sounds/G.wav"), hSound = loadSound("sounds/H.wav"), iSound = loadSound("sounds/I.wav"), jSound = loadSound("sounds/J.wav");
@@ -35,7 +37,6 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   state = "program";
-  let timer = millis();
   fSound.play();
   // creates text input box
   textbox = createInput("Enter What You Want EnCrypted");
@@ -199,26 +200,40 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
-      lolxdrawr();
+      i++;
+      if (i == soundsList.length) return;
+      soundsList[i].play();
+      setTimeout(playsound,200);
     }
   }
 }
 
-function lolxdrawr(){
-  let n = 0;
-  myTimer = new Timer(0);
-  while (n < soundsList.length){
-    soundsList[n].play();
-    if (myTimer.isDone()){
-      n++;
-      mytTimer.reset(
-        .........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................1000)
-    }
-    if (n >= soundsList.lenght){
-      break;
-    }
-  }
-}
+// function playsound() {
+//   if (state === "program") {
+//     if (soundsList.length >= 1) {
+//       background(255);
+//       i++;
+//       if (i == soundsList.length) return;
+//       soundsList[i].addEventListener('ended', playsound);
+//       soundsList[i].play();
+//     }
+//   }
+// }
+
+// function lolxdrawr(){
+//   let n = 0;
+//   myTimer = new Timer(0);
+//   while (n < soundsList.length){
+//     soundsList[n].play();
+//     if (myTimer.isDone()){
+//       n++;
+//       mytTimer.reset(1000)
+//     }
+//     if (n >= soundsList.lenght){
+//       break;
+//     }
+//   }
+// }
 
 class Timer {
   constructor(waitTime) {
