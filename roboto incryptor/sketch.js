@@ -3,7 +3,7 @@
 // May 9, 2018
 
 // global variables
-
+// omg omg qwerty omg omg omg qwerty omg omg omg
 
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
@@ -29,7 +29,6 @@ let box = {
 };
 
 let state;
-let isDone = true;
 
 let i = -1;
 
@@ -94,13 +93,6 @@ function setup() {
   decryptButton.style("padding", "16px 32px");
   decryptButton.style("width", "20%");
 
-  startButton.style("background-color", "#4CAF50");
-  startButton.style("color", "white");
-  startButton.style("border", "none");
-  startButton.style("font-size", "30px");
-  startButton.style("padding", "16px 32px");
-  startButton.style("width", "20%");
-
   textbox.style("width", "56%");
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
@@ -111,41 +103,32 @@ function setup() {
 
 function draw() {
   startAnimation();
-  checkEvents();
+  if (state === "program") {
+    checkEvents();
+  }
 }
 
-
 function checkEvents() {
-  if (state === "start") {
-    startButton.position(width / 2.5, 600)
-    startButton.mousePressed(changeState);
-  }
   if (state === "program") {
-    startButton.remove();
     textbox.position(width / 5, 400);
     submitButton.position(width / 5, 500);
     playSoundButton.position(width / 5 * 2.85, 500);
-    downloadButton.position(width / 5 * 2.85, 600);
-    uploadButton.position(width / 5 * 1.5, 600);
+    downloadButton.position(width / 5 * 2.85,600);
+    uploadButton.position(width / 5 * 1.5,600);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
     downloadButton.mousePressed(downloadSound);
     uploadButton.mousePressed(uploadScreen);
-    background(255);
   }
   if (state === "upload") {
-    n = createCanvas(windowWidth, windowHeighth);
+    n = createCanvas(windowWidth,windowHeighth);
+    n.drop(background(255),gotFile)
   }
 }
-
-function changeState(){
-  state = "program"
+function gotFile(){
+//
 }
-function gotFile() {
-  //
-}
-
-function downloadSound() {
+function downloadSound(){
   if (state = "program") {
     //download button function
     let content = lettersList;
@@ -156,7 +139,6 @@ function downloadSound() {
     downloadFile(blob, filename);
   }
 }
-
 function recordInput() {
   if (state === "program") {
     lettersList = [];
@@ -262,14 +244,14 @@ function playsound() {
     if (soundsList.length >= 1) {
       background(255);
       noStroke();
-      fill(30, 144, 255);
-      rect(box.x, box.y, box.l, box.w);
+      fill(30,144,255);
+      rect(box.x,box.y,box.l,box.w);
       fill(0);
       text("You Can Now Download", wordtext.x, wordtext.y);
       i++; // adds 1 to the list value
       if (i === soundsList.length) return;
       soundsList[i].play();
-      setTimeout(playsound, 250); // call the same fuction again every .250 seconds
+      setTimeout(playsound,250); // call the same fuction again every .250 seconds
     }
   }
 }
@@ -290,7 +272,7 @@ class Letter {
     text("ROBOTO", this.x, this.y);
   }
   move() {
-    this.x += random(2, -2);
+    this.x += random(-7, 7);
   }
 }
 
@@ -298,18 +280,18 @@ function submitText() {
   if (state === "program") {
     textAlign(CENTER);
     textSize(100);
-    background(255);
+
     if (lettersList.length < 1) {
       noStroke();
-      fill(204, 0, 0);
-      rect(box.x, box.y, box.l, box.w);
+      fill(204,0,0);
+      rect(box.x,box.y,box.l,box.w);
       fill(0);
       text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
 
     } else if (lettersList.length >= 1) {
       noStroke();
-      fill(76, 175, 80);
-      rect(box.x, box.y, box.l, box.w);
+      fill(76,175,80);
+      rect(box.x,box.y,box.l,box.w);
       fill(0);
       textSize(80);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
@@ -317,11 +299,10 @@ function submitText() {
   }
 }
 
-
 function startAnimation() {
-  if (state === "start" && isDone) {
+  if (state === "start") {
     background(255);
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 30; i++) {
       animationList.push(new Letter(random(50, width - 50), random(50, height - 50), random(25, 100), random(3, 7), random(15, 255)));
       animationList[i].move();
       animationList[i].display();
@@ -329,15 +310,17 @@ function startAnimation() {
   }
 }
 
-function uploadScreen() {
+function uploadScreen(){
   state = "upload";
   downloadButton.remove();
   uploadButton.remove();
   textbox.remove();
   playSoundButton.remove();
   submitButton.remove();
-  decryptButton.position(width / 2 - 230, 700);
-  rect(width/6, 100, 1100, 400);
+  decryptButton.position(width / 2 - 170 , 640);
+  background(255);
+  rect(100,100,1400,500);
   textSize(130);
-  text("DROP",width/2.5, 350);
+  text("DROP", 600, 400);
+
 }
