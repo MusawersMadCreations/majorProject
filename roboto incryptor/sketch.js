@@ -337,7 +337,7 @@ function uploadScreen() {
   playSoundButton.remove();
   submitButton.remove();
   decryptButton.position(width / 2 - 230, 700);
-  rect(300, 100, 1400, 500, );
+  rect(width/6, 100, 1100, 400);
   textSize(130);
-  text("DROP", 800, 400);
+  text("DROP",width/2.5, 350);
 }
