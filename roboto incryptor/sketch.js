@@ -95,20 +95,7 @@ function setup() {
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
 
-
-  changeTextToSound();
-}
-
-function draw() {
-  if (state === "start"){
-    startAnimation();
-  }
-  if (state === "program") {
-    checkEvents();
-  }
-}
-
-function startAnimation() {
+//ANIMATION CORDS
   let r = {
     rx: width/6,
     ry: height/5,
@@ -123,7 +110,18 @@ function startAnimation() {
     o3x: width/6 * 6,
     o3y: height/5 * 5,
   };
+}
 
+function draw() {
+  if (state === "start"){
+    startAnimation();
+  }
+  if (state === "program") {
+    checkEvents();
+  }
+}
+
+function startAnimation() {
   if (state === "start") {
     background(255);
     fill(0);
@@ -136,7 +134,6 @@ function startAnimation() {
     text("O",r.o3x,r.o3y,);
   }
 }
-
 
 function checkEvents() {
   if (state === "program") {
@@ -154,7 +151,6 @@ function checkEvents() {
     n.drop(gotFile);
   }
 }
-
 
 function recordInput() {
   if (state === "program") {
@@ -277,7 +273,6 @@ function playsound() {
   }
 }
 
-
 function submitText() {
   if (state === "program") {
     textAlign(CENTER);
@@ -301,14 +296,6 @@ function submitText() {
   }
 }
 
-function gotFile() {
-  if (file.type === '.txt') {
-    lettersList(file.data).push()
-  } else {
-    print('ONLY ROBOTO FILES');
-  }
-}
-
 function downloadSound() {
   if (state = "program") {
     //download button function
@@ -318,6 +305,14 @@ function downloadSound() {
       type: "text/plain;charset=utf-8"
     });
     downloadFile(blob, filename);
+  }
+}
+
+function gotFile() {
+  if (file.type === '.txt') {
+    lettersList(file.data).push()
+  } else {
+    print('ONLY ROBOTO FILES');
   }
 }
 
