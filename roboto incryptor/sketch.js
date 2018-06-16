@@ -44,7 +44,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  n = createCanvas(windowWidth, windowHeight);
   state = "program";
 
   // creates text input box
@@ -123,16 +123,14 @@ function checkEvents() {
     uploadButton.mousePressed(uploadScreen);
   }
   if (state === "upload") {
-    n = createCanvas(1000,1000);
     n.drop(gotFile);
   }
 }
 function gotFile(){
-  console.log("YESS");
   if (file.type === '.txt') {
     lettersList(file.data).push()
   } else {
-    println('ONLY ROBOTO FILES');
+    print('ONLY ROBOTO FILES');
   }
 }
 
