@@ -1,21 +1,20 @@
 // Roboto Language incryptor
 // Musawer Jalal
 // May 9, 2018
+// version 0.7
+// For Dan Schellenburg, CompSci 30
 
 // global variables
-// omg omg qwerty omg omg omg qwerty omg omg omg
-//Despacito Quiero respirar tu cuello despacito Deja que te diga cosas al oído Para que te acuerdes si no estás conmigoDespacito Quiero desnudarte a besos despacito Firmo en las paredes de tu laberinto Y hacer de tu cuerpo todo un manuscrito
-
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
 let textbox;
 let submitButton, playSoundButton, downloadButton;
 
-let animationList = [];
 let lettersList = [];
 let soundsList = [];
 
-let myTimer;
+let state;
+let i = -1;
 
 let wordtext = {
   x: 785,
@@ -29,10 +28,6 @@ let box = {
   w: 125,
 };
 
-let state;
-
-let i = -1;
-let trigger = true;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -46,6 +41,7 @@ function preload() {
 function setup() {
   n = createCanvas(windowWidth, windowHeight);
   state = "program";
+  time = millis();
 
   // creates text input box
   textbox = createInput("Enter What You Want EnCrypted");
@@ -104,19 +100,51 @@ function setup() {
 }
 
 function draw() {
-  startAnimation();
+  if (state === "start"){
+    startAnimation();
+  }
   if (state === "program") {
     checkEvents();
   }
 }
+
+function startAnimation() {
+  let r = {
+    rx: width/6,
+    ry: height/5,
+    ox: width/6 * 2,
+    oy: height/5 * 5,
+    bx: width/6 * 3,
+    by: height/5,
+    o2x: width/6 * 4,
+    o2y: height/5 * 5,
+    tx: width/6 * 5,
+    ty: height/5,
+    o3x: width/6 * 6,
+    o3y: height/5 * 5,
+  };
+
+  if (state === "start") {
+    background(255);
+    fill(0);
+    textSize(100);
+    text("R",r.rx,r.ry,);
+    text("O",r.ox,r.oy,);
+    text("B",r.bx,r.by,);
+    text("O",r.o2x,r.o2y,);
+    text("T",r.tx,r.ty,);
+    text("O",r.o3x,r.o3y,);
+  }
+}
+
 
 function checkEvents() {
   if (state === "program") {
     textbox.position(width / 5, 400);
     submitButton.position(width / 5, 500);
     playSoundButton.position(width / 5 * 2.85, 500);
-    downloadButton.position(width / 5 * 2.85,600);
-    uploadButton.position(width / 5 * 1.5,600);
+    downloadButton.position(width / 5 * 2.85, 600);
+    uploadButton.position(width / 5 * 1.5, 600);
     playSoundButton.mousePressed(playsound);
     submitButton.mousePressed(recordInput);
     downloadButton.mousePressed(downloadSound);
@@ -126,25 +154,8 @@ function checkEvents() {
     n.drop(gotFile);
   }
 }
-function gotFile(){
-  if (file.type === '.txt') {
-    lettersList(file.data).push()
-  } else {
-    print('ONLY ROBOTO FILES');
-  }
-}
 
-function downloadSound(){
-  if (state = "program") {
-    //download button function
-    let content = lettersList;
-    let filename = "Roboto.text";
-    let blob = new Blob([content], {
-      type: "text/plain;charset=utf-8"
-    });
-    downloadFile(blob, filename);
-  }
-}
+
 function recordInput() {
   if (state === "program") {
     lettersList = [];
@@ -248,9 +259,10 @@ function changeTextToSound() {
 function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
+      background(255);
       noStroke();
-      fill(30,144,255);
-      rect(box.x,box.y,box.l,box.w);
+      fill(30, 144, 255);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       text("You Can Now Download", wordtext.x, wordtext.y);
       i++; // adds 1 to the list value
@@ -260,30 +272,11 @@ function playsound() {
       }
       if (i === soundsList.length) return;
       soundsList[i].play();
-      setTimeout(playsound,250); // call the same fuction again every .250 seconds
+      setTimeout(playsound, 250); // call the same fuction again every .250 seconds
     }
   }
 }
 
-
-class Letter {
-  constructor(x, y, size, speed, color) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    this.speed = speed;
-    this.color = color;
-  }
-
-  display() {
-    textSize(this.size);
-    fill(0, 0, 0, this.color);
-    text("ROBOTO", this.x, this.y);
-  }
-  move() {
-    this.x += random(-7, 7);
-  }
-}
 
 function submitText() {
   if (state === "program") {
@@ -292,15 +285,15 @@ function submitText() {
 
     if (lettersList.length < 1) {
       noStroke();
-      fill(204,0,0);
-      rect(box.x,box.y,box.l,box.w);
+      fill(204, 0, 0);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       text("You Can't Encrypt Nothing", wordtext.x, wordtext.y);
 
     } else if (lettersList.length >= 1) {
       noStroke();
-      fill(76,175,80);
-      rect(box.x,box.y,box.l,box.w);
+      fill(76, 175, 80);
+      rect(box.x, box.y, box.l, box.w);
       fill(0);
       textSize(80);
       text("Your Text Has Been EnCrypted", wordtext.x, wordtext.y);
@@ -308,28 +301,61 @@ function submitText() {
   }
 }
 
-function startAnimation() {
-  if (state === "start") {
-    background(255);
-    for (let i = 0; i < 30; i++) {
-      animationList.push(new Letter(random(50, width - 50), random(50, height - 50), random(25, 100), random(3, 7), random(15, 255)));
-      animationList[i].move();
-      animationList[i].display();
-    }
+function gotFile() {
+  if (file.type === '.txt') {
+    lettersList(file.data).push()
+  } else {
+    print('ONLY ROBOTO FILES');
   }
 }
 
-function uploadScreen(){
+function downloadSound() {
+  if (state = "program") {
+    //download button function
+    let content = soundsList;
+    let filename = "Roboto.text";
+    let blob = new Blob([content], {
+      type: "text/plain;charset=utf-8"
+    });
+    downloadFile(blob, filename);
+  }
+}
+
+function uploadScreen() {
+  background(255);
   state = "upload";
   downloadButton.remove();
   uploadButton.remove();
   textbox.remove();
   playSoundButton.remove();
   submitButton.remove();
-  decryptButton.position(width / 2 - 170 , 640);
-  background(255);
-  rect(100,100,1400,500);
+  decryptButton.position(width / 2 - 170, 640);
+  rect(100, 100, 1400, 500);
   textSize(130);
   text("DROP", 600, 400);
 
+}
+
+class Timer {
+  constructor(waitTime) {
+    this.waitTime = waitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  reset(newWaitTime) {
+    this.waitTime = newWaitTime;
+    this.startTime = millis();
+    this.finishTime = this.startTime + this.waitTime;
+    this.timerIsDone = false;
+  }
+
+  isDone() {
+    if (millis() >= this.finishTime) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
