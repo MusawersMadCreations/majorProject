@@ -123,13 +123,19 @@ function checkEvents() {
     uploadButton.mousePressed(uploadScreen);
   }
   if (state === "upload") {
-    n = createCanvas(windowWidth,windowHeighth);
-    n.drop(background(255),gotFile)
+    n = createCanvas(1000,1000);
+    n.drop(gotFile);
   }
 }
 function gotFile(){
-//
+  console.log("YESS");
+  if (file.type === '.txt') {
+    lettersList(file.data).push()
+  } else {
+    println('ONLY ROBOTO FILES');
+  }
 }
+
 function downloadSound(){
   if (state = "program") {
     //download button function
@@ -252,7 +258,7 @@ function playsound() {
       text("You Can Now Download", wordtext.x, wordtext.y);
       i++; // adds 1 to the list value
       if (i === soundsList.length) return;
-  
+
       soundsList[i].play();
       setTimeout(playsound,250); // call the same fuction again every .250 seconds
     }
