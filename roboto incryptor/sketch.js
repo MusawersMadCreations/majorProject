@@ -248,15 +248,17 @@ function changeTextToSound() {
 function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
-      background(255);
       noStroke();
       fill(30,144,255);
       rect(box.x,box.y,box.l,box.w);
       fill(0);
       text("You Can Now Download", wordtext.x, wordtext.y);
       i++; // adds 1 to the list value
+      if (i === soundsList.length) {
+        i = -1
+        background(255);
+      }
       if (i === soundsList.length) return;
-
       soundsList[i].play();
       setTimeout(playsound,250); // call the same fuction again every .250 seconds
     }
