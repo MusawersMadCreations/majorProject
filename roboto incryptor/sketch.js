@@ -1,7 +1,7 @@
 // Roboto Language incryptor
-// Musawer Jalal
-// May 9, 2018
-// version 0.8
+//  By Musawer Jalal
+// Started May 9, 2018 - Current
+// version 0.81
 // For Dan Schellenburg, CompSci 30
 // sounds made with; https://www.bfxr.net/
 // how to replace "," from string; https://stackoverflow.com/questions/908608/how-to-remove-from-a-string-in-javascript
