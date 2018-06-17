@@ -6,6 +6,7 @@
 // sounds made with; https://www.bfxr.net/
 // how to replace "," from string; https://stackoverflow.com/questions/908608/how-to-remove-from-a-string-in-javascript
 // robot voice;  https://lingojam.com/RobotVoiceGenerator
+// bugs sometimes the upload file inputs the file location instead of data.
 
 // global variables
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
