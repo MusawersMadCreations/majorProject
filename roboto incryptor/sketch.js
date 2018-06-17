@@ -1,8 +1,10 @@
 // Roboto Language incryptor
 // Musawer Jalal
 // May 9, 2018
-// version 0.7
+// version 0.8
 // For Dan Schellenburg, CompSci 30
+// sounds made with https://www.bfxr.net/
+
 
 // global variables
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
@@ -28,7 +30,7 @@ let box = {
   w: 125,
 };
 
-let inputValue = ""
+let inputValue;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -41,11 +43,13 @@ function preload() {
 
 function setup() {
   n = createCanvas(windowWidth, windowHeight);
+  n.drop(gotFile);
 
   state = "program";
   time = millis();
 
   // creates text input box
+  inputValue = "Enter What You Want EnCrypted";
   textbox = createInput(inputValue);
 
   //buttons
@@ -107,7 +111,6 @@ function setup() {
 }
 
 function draw() {
-  n.drop(gotFile);
   if (state === "start"){
     startAnimation();
   }
@@ -316,13 +319,11 @@ function gotFile(file) {
   // uploads file to array then resets to main prgram state but with file in input box
   background(255);
   state = "program";
-
-  textbox = createInput(inputValue);
+  // put file value in texbox
+  textbox = createInput(file.data);
   playSoundButton = createButton("Play Sound");
-
-  lettersList = [];
+  // plays sound
   lettersList = textbox.value().split("");
-  lettersList.push(file.data); //sends file to main array
   changeTextToSound();
 
   playSoundButton.position(width / 5 * 2.85, 500);
