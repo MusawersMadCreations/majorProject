@@ -5,11 +5,12 @@
 // For Dan Schellenburg, CompSci 30
 // sounds made with; https://www.bfxr.net/
 // how to replace "," from string; https://stackoverflow.com/questions/908608/how-to-remove-from-a-string-in-javascript
-
+// robot voice;  https://lingojam.com/RobotVoiceGenerator
 
 // global variables
 let aSound, bSound, cSound, dSound, eSound, fSound, gSound, hSound, iSound, jSound, kSound, lSound, mSound, nSound;
 let oSound, pSound, qSound, rSound, sSound, tSound, uSound, vSound, wSound, xSound, ySound, zSound, spaceSound;
+let robotoMp3, startMp3;
 let textbox;
 let submitButton, playSoundButton, downloadButton;
 
@@ -31,8 +32,24 @@ let box = {
   w: 125,
 };
 
+//ANIMATION CORDS
+let r = {
+  rx: 1600 / 6,
+  ry: 730 / 5,
+  ox: 1600 / 6 * 2,
+  oy: 730 / 5 * 5,
+  bx: 1600 / 6 * 3,
+  by: 730 / 5,
+  o2x: 1600 / 6 * 4,
+  o2y: 730 / 5 * 5,
+  tx: 1600 / 6 * 5,
+  ty: 730 / 5,
+  o3x: 1600 / 6 * 6,
+  o3y: 730 / 5 * 5,
+};
+
 let inputValue;
-let trigger;
+let trigger, animationTrigger;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -40,16 +57,16 @@ function preload() {
   kSound = loadSound("sounds/K.wav"), lSound = loadSound("sounds/L.wav"), mSound = loadSound("sounds/M.wav"), nSound = loadSound("sounds/N.wav"), oSound = loadSound("sounds/O.wav");
   pSound = loadSound("sounds/P.wav"), qSound = loadSound("sounds/Q.wav"), rSound = loadSound("sounds/R.wav"), sSound = loadSound("sounds/S.wav"), tSound = loadSound("sounds/T.wav");
   uSound = loadSound("sounds/U.wav"), vSound = loadSound("sounds/V.wav"), wSound = loadSound("sounds/W.wav"), xSound = loadSound("sounds/X.wav"), ySound = loadSound("sounds/Y.wav");
-  zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav");
+  zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav"), robotoMp3 = loadSound("sounds/roboto.mp3"), startMp3 = loadSound("sounds/start.wav");
 }
 
 function setup() {
   n = createCanvas(windowWidth, windowHeight);
   n.drop(gotFile);
 
-  state = "program";
-  time = millis();
+  state = "start";
   trigger = true;
+  animationTrigger = true;
 
   // creates text input box
   inputValue = "Enter What You Want EnCrypted";
@@ -69,7 +86,6 @@ function setup() {
   submitButton.style("font-size", "30px");
   submitButton.style("padding", "16px 32px");
   submitButton.style("width", "20%");
-
 
   playSoundButton.style("background-color", "#4CAF50");
   playSoundButton.style("color", "white");
@@ -95,26 +111,10 @@ function setup() {
   textbox.style("width", "56%");
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
-
-//ANIMATION CORDS
-  let r = {
-    rx: width/6,
-    ry: height/5,
-    ox: width/6 * 2,
-    oy: height/5 * 5,
-    bx: width/6 * 3,
-    by: height/5,
-    o2x: width/6 * 4,
-    o2y: height/5 * 5,
-    tx: width/6 * 5,
-    ty: height/5,
-    o3x: width/6 * 6,
-    o3y: height/5 * 5,
-  };
 }
 
 function draw() {
-  if (state === "start"){
+  if (state === "start") {
     startAnimation();
   }
   if (state === "program") {
@@ -123,18 +123,44 @@ function draw() {
 }
 
 function startAnimation() {
-  if (state === "start") {
-    background(255);
-    fill(0);
-    textSize(100);
-    text("R",r.rx,r.ry,);
-    text("O",r.ox,r.oy,);
-    text("B",r.bx,r.by,);
-    text("O",r.o2x,r.o2y,);
-    text("T",r.tx,r.ty,);
-    text("O",r.o3x,r.o3y,);
+  time = millis();
+  background(255);
+  fill(0);
+  textSize(100);
+  if (time >= 1000 && time <= 1100) {
+    startMp3.play();
+  }
+  if (time >= 4500 && time <= 4600) {
+    robotoMp3.play();
+  }
+  background(32, 32, 32);
+  fill(255);
+  if (animationTrigger) {
+    r.ry++, r.oy--, r.by++, r.o2y--, r.ty++, r.o3y--;
+    text("R", r.rx, r.ry);
+    text("O", r.ox, r.oy);
+    text("B", r.bx, r.by);
+    text("O", r.o2x, r.o2y);
+    text("T", r.tx, r.ty);
+    text("O", r.o3x, r.o3y);
+  }
+  if (time > 5630) {
+    animationTrigger = false;
+    text("R", r.rx, r.ry);
+    text("O", r.ox, r.oy);
+    text("B", r.bx, r.by);
+    text("O", r.o2x, r.o2y);
+    text("T", r.tx, r.ty);
+    text("O", r.o3x, r.o3y);
+    textSize(25);
+    text("Press SPACE To Start", width / 2 - 100, height / 6 * 5);
+    if (key === ' ' || key === 'Spacebar') {
+      background(255);
+      state = "program";
+    }
   }
 }
+
 
 function checkEvents() {
   if (state === "program") {
@@ -254,7 +280,7 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
-      if (trigger){
+      if (trigger) {
         noStroke();
         fill(30, 144, 255);
         rect(box.x, box.y, box.l, box.w);
@@ -319,7 +345,7 @@ function uploadScreen() {
   playSoundButton.remove();
   submitButton.remove();
   textSize(130);
-  text("DROP FILE", width/3 - 50, height/2);
+  text("DROP FILE", width / 3 - 50, height / 2);
 }
 
 function gotFile(file) {
@@ -327,11 +353,11 @@ function gotFile(file) {
   background(255);
   state = "program";
   soundsList = [];
-  inputValue = file.data;  // put file value in texbox
+  inputValue = file.data; // put file value in texbox
   lettersList = inputValue;
-  inputValue = inputValue.replace( /,/g, "" ); // removes all commas from data
+  inputValue = inputValue.replace(/,/g, ""); // removes all commas from data
 
-  textbox = createInput(inputValue);// make input = data
+  textbox = createInput(inputValue); // make input = data
   playSoundButton = createButton("Play Sound");
   // plays sound
   lettersList = textbox.value().split("");
@@ -349,29 +375,4 @@ function gotFile(file) {
   textbox.style("width", "56%");
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
-
-}
-
-class Timer {
-  constructor(waitTime) {
-    this.waitTime = waitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  reset(newWaitTime) {
-    this.waitTime = newWaitTime;
-    this.startTime = millis();
-    this.finishTime = this.startTime + this.waitTime;
-    this.timerIsDone = false;
-  }
-
-  isDone() {
-    if (millis() >= this.finishTime) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
