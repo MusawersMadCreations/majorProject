@@ -40,6 +40,8 @@ function preload() {
 
 function setup() {
   n = createCanvas(windowWidth, windowHeight);
+  n.drop(gotFile);
+
   state = "program";
   time = millis();
 
@@ -147,9 +149,7 @@ function checkEvents() {
     downloadButton.mousePressed(downloadSound);
     uploadButton.mousePressed(uploadScreen);
   }
-  if (state === "upload") {
-    n.drop(gotFile);
-  }
+
 }
 
 function recordInput() {
@@ -299,8 +299,8 @@ function submitText() {
 function downloadSound() {
   if (state = "program") {
     //download button function
-    let content = soundsList;
-    let filename = "Roboto.text";
+    let content = lettersList;
+    let filename = "Roboto";
     let blob = new Blob([content], {
       type: "text/plain;charset=utf-8"
     });
@@ -308,7 +308,7 @@ function downloadSound() {
   }
 }
 
-function gotFile() {
+function gotFile(file) {
   if (file.type === '.txt') {
     lettersList(file.data).push()
   } else {
@@ -317,17 +317,16 @@ function gotFile() {
 }
 
 function uploadScreen() {
-  background(255);
+  background(76, 175, 80);
   state = "upload";
   downloadButton.remove();
   uploadButton.remove();
   textbox.remove();
   playSoundButton.remove();
   submitButton.remove();
-  decryptButton.position(width / 2 - 170, 640);
-  rect(100, 100, 1400, 500);
+  decryptButton.position(width / 2 - 130, height/4 * 3);
   textSize(130);
-  text("DROP", 600, 400);
+  text("DROP FILE", width/3 - 50, height/2);
 
 }
 
