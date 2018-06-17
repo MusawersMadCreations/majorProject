@@ -28,6 +28,7 @@ let box = {
   w: 125,
 };
 
+let inputValue = ""
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -40,20 +41,18 @@ function preload() {
 
 function setup() {
   n = createCanvas(windowWidth, windowHeight);
-  n.drop(gotFile);
 
   state = "program";
   time = millis();
 
   // creates text input box
-  textbox = createInput("Enter What You Want EnCrypted");
+  textbox = createInput(inputValue);
 
   //buttons
   submitButton = createButton("Encrypt");
   playSoundButton = createButton("Play Sound");
   downloadButton = createButton("Download");
   uploadButton = createButton("Upload");
-  decryptButton = createButton("Decrypt");
   startButton = createButton("Start");
 
   //css styles
@@ -86,13 +85,6 @@ function setup() {
   uploadButton.style("padding", "6px 2px");
   uploadButton.style("width", "10%");
 
-  decryptButton.style("background-color", "#1E90FF");
-  decryptButton.style("color", "white");
-  decryptButton.style("border", "none");
-  decryptButton.style("font-size", "30px");
-  decryptButton.style("padding", "16px 32px");
-  decryptButton.style("width", "20%");
-
   textbox.style("width", "56%");
   textbox.style("height", "15px");
   textbox.style("padding", "7px");
@@ -115,6 +107,7 @@ function setup() {
 }
 
 function draw() {
+  n.drop(gotFile);
   if (state === "start"){
     startAnimation();
   }
@@ -149,7 +142,6 @@ function checkEvents() {
     downloadButton.mousePressed(downloadSound);
     uploadButton.mousePressed(uploadScreen);
   }
-
 }
 
 function recordInput() {
@@ -277,7 +269,7 @@ function submitText() {
   if (state === "program") {
     textAlign(CENTER);
     textSize(100);
-
+    // cases for input actions
     if (lettersList.length < 1) {
       noStroke();
       fill(204, 0, 0);
@@ -308,25 +300,43 @@ function downloadSound() {
   }
 }
 
-function gotFile(file) {
-  if (file.type === '.txt') {
-    lettersList(file.data).push()
-  } else {
-    print('ONLY ROBOTO FILES');
-  }
-}
-
 function uploadScreen() {
-  background(76, 175, 80);
+  background(255);
   state = "upload";
   downloadButton.remove();
   uploadButton.remove();
   textbox.remove();
   playSoundButton.remove();
   submitButton.remove();
-  decryptButton.position(width / 2 - 130, height/4 * 3);
   textSize(130);
   text("DROP FILE", width/3 - 50, height/2);
+}
+
+function gotFile(file) {
+  // uploads file to array then resets to main prgram state but with file in input box
+  background(255);
+  state = "program";
+
+  textbox = createInput(inputValue);
+  playSoundButton = createButton("Play Sound");
+
+  lettersList = [];
+  lettersList = textbox.value().split("");
+  lettersList.push(file.data); //sends file to main array
+  changeTextToSound();
+
+  playSoundButton.position(width / 5 * 2.85, 500);
+  playSoundButton.mousePressed(playsound);
+  playSoundButton.style("background-color", "#4CAF50");
+  playSoundButton.style("color", "white");
+  playSoundButton.style("border", "none");
+  playSoundButton.style("font-size", "30px");
+  playSoundButton.style("padding", "16px 32px");
+  playSoundButton.style("width", "20%");
+
+  textbox.style("width", "56%");
+  textbox.style("height", "15px");
+  textbox.style("padding", "7px");
 
 }
 
