@@ -3,7 +3,8 @@
 // May 9, 2018
 // version 0.8
 // For Dan Schellenburg, CompSci 30
-// sounds made with https://www.bfxr.net/
+// sounds made with; https://www.bfxr.net/
+// how to replace "," from string; https://stackoverflow.com/questions/908608/how-to-remove-from-a-string-in-javascript
 
 
 // global variables
@@ -31,6 +32,7 @@ let box = {
 };
 
 let inputValue;
+let trigger;
 
 function preload() {
   aSound = loadSound("sounds/A.wav"), bSound = loadSound("sounds/B.wav"), cSound = loadSound("sounds/C.wav"), dSound = loadSound("sounds/D.wav"), eSound = loadSound("sounds/E.wav");
@@ -47,6 +49,7 @@ function setup() {
 
   state = "program";
   time = millis();
+  trigger = true;
 
   // creates text input box
   inputValue = "Enter What You Want EnCrypted";
@@ -251,11 +254,14 @@ function playsound() {
   if (state === "program") {
     if (soundsList.length >= 1) {
       background(255);
-      noStroke();
-      fill(30, 144, 255);
-      rect(box.x, box.y, box.l, box.w);
-      fill(0);
-      text("You Can Now Download", wordtext.x, wordtext.y);
+      if (trigger){
+        noStroke();
+        fill(30, 144, 255);
+        rect(box.x, box.y, box.l, box.w);
+        fill(0);
+        text("You Can Now Download", wordtext.x, wordtext.y);
+      }
+
       i++; // adds 1 to the list value
       if (i === soundsList.length) {
         i = -1
@@ -306,6 +312,7 @@ function downloadSound() {
 function uploadScreen() {
   background(255);
   state = "upload";
+  trigger = false;
   downloadButton.remove();
   uploadButton.remove();
   textbox.remove();
@@ -319,8 +326,12 @@ function gotFile(file) {
   // uploads file to array then resets to main prgram state but with file in input box
   background(255);
   state = "program";
-  // put file value in texbox
-  textbox = createInput(file.data);
+  soundsList = [];
+  inputValue = file.data;  // put file value in texbox
+  lettersList = inputValue;
+  inputValue = inputValue.replace( /,/g, "" ); // removes all commas from data
+
+  textbox = createInput(inputValue);// make input = data
   playSoundButton = createButton("Play Sound");
   // plays sound
   lettersList = textbox.value().split("");
