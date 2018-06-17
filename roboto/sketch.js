@@ -58,7 +58,7 @@ function preload() {
   kSound = loadSound("sounds/K.wav"), lSound = loadSound("sounds/L.wav"), mSound = loadSound("sounds/M.wav"), nSound = loadSound("sounds/N.wav"), oSound = loadSound("sounds/O.wav");
   pSound = loadSound("sounds/P.wav"), qSound = loadSound("sounds/Q.wav"), rSound = loadSound("sounds/R.wav"), sSound = loadSound("sounds/S.wav"), tSound = loadSound("sounds/T.wav");
   uSound = loadSound("sounds/U.wav"), vSound = loadSound("sounds/V.wav"), wSound = loadSound("sounds/W.wav"), xSound = loadSound("sounds/X.wav"), ySound = loadSound("sounds/Y.wav");
-  zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav"), robotoMp3 = loadSound("sounds/roboto.mp3"), startMp3 = loadSound("sounds/start.wav");
+  zSound = loadSound("sounds/Z.wav"), spaceSound = loadSound("sounds/space.wav"), startMp3 = loadSound("sounds/start.wav"), robotoMp3 = loadSound("sounds/roboto.mp3");
 }
 
 function setup() {
